@@ -26,7 +26,7 @@ export const SimpleTextReveal: FC<SimpleTextRevealProps> = ({ children, classNam
       y: 0,
       filter: "blur(0px)",
       transition: {
-        type: "spring",
+        type: "spring" as const,
         damping: 12,
         stiffness: 100,
       },
@@ -36,7 +36,7 @@ export const SimpleTextReveal: FC<SimpleTextRevealProps> = ({ children, classNam
       y: 10,
       filter: "blur(4px)",
       transition: {
-        type: "spring",
+        type: "spring" as const,
         damping: 12,
         stiffness: 100,
       },
