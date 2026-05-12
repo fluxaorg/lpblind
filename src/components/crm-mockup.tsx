@@ -9,9 +9,9 @@ import {
   Briefcase, 
   DollarSign, 
   Wrench, 
-  Settings, 
   Package,
-  Bell
+  Bell,
+  LifeBuoy
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SimpleTextReveal } from "@/components/ui/simple-text-reveal";
@@ -20,7 +20,7 @@ import { TechTextCloud } from "@/components/tech-text-cloud";
 import { ShieldCheck } from "lucide-react";
 import { KineticText } from "@/components/ui/kinetic-text";
 
-type TabId = 'dashboard' | 'pipelines' | 'propostas' | 'projetos' | 'estoque' | 'financeiro' | 'posvendas' | 'configuracoes';
+type TabId = 'dashboard' | 'pipelines' | 'propostas' | 'projetos' | 'estoque' | 'financeiro' | 'posvendas' | 'suporte';
 
 export function CrmMockup() {
   const techItems = [
@@ -38,7 +38,7 @@ export function CrmMockup() {
 
   const tabs: TabId[] = [
     'dashboard', 'pipelines', 'propostas', 'projetos', 
-    'estoque', 'financeiro', 'posvendas', 'configuracoes'
+    'estoque', 'financeiro', 'posvendas', 'suporte'
   ];
 
   const startAutoSwitch = () => {
@@ -78,9 +78,9 @@ export function CrmMockup() {
         };
       case 'pipelines':
         return {
-          title: "Pipeline de Produção",
-          subtitle: "Acompanhe todo o fluxo da sua blindadora de forma visual",
-          description: "Visualize rapidamente em qual etapa cada veículo está. Mova cards, acesse detalhes e elimine gargalos na produção com um painel Kanban intuitivo e atualizado em tempo real."
+          title: "Pipeline de Vendas",
+          subtitle: "Gestão de leads e conversão",
+          description: "Acompanhe seus leads desde o primeiro contato até o fechamento. Visualize o funil de vendas, identifique oportunidades 'quentes' e não perca nenhum negócio."
         };
       case 'propostas':
         return {
@@ -102,9 +102,9 @@ export function CrmMockup() {
         };
       case 'financeiro':
         return {
-          title: "Histórico Financeiro",
-          subtitle: "Receitas, despesas e margem de lucro por veículo",
-          description: "Tenha visão consolidada do fluxo de caixa, pagamentos pendentes e a margem de lucro exata de cada blindagem fechada."
+          title: "Gestão Financeira",
+          subtitle: "Controle total de fluxo de caixa e resultados",
+          description: "Visualize suas receitas, despesas e resultado líquido de forma simplificada. Tenha clareza sobre a saúde financeira da sua blindadora em poucos cliques."
         };
       case 'posvendas':
         return {
@@ -112,11 +112,11 @@ export function CrmMockup() {
           subtitle: "Retenção e agendamentos de manutenção",
           description: "Programe revisões periódicas de vidros e documentação. Surpreenda o cliente avisando com antecedência que está na hora de uma manutenção preventiva."
         };
-      case 'configuracoes':
+      case 'suporte':
         return {
-          title: "Configurações do Sistema",
-          subtitle: "Personalize sua experiência BlindMaster",
-          description: "Ajuste permissões, integre novas ferramentas e customize os fluxos de trabalho para se adaptarem perfeitamente à realidade da sua oficina."
+          title: "Central de Suporte",
+          subtitle: "Cuidado e atenção total ao nosso cliente",
+          description: "Acesse nossa equipe técnica, manuais e recursos rápidos. Estamos aqui para garantir que sua experiência com o BlindMaster seja impecável."
         };
       default:
         return {
@@ -187,7 +187,7 @@ export function CrmMockup() {
                 <SidebarItem icon={<Package size={18} />} text="Estoque" active={activeTab === 'estoque'} onClick={() => handleTabChange('estoque')} expanded={sidebarExpanded} />
                 <SidebarItem icon={<DollarSign size={18} />} text="Financeiro" active={activeTab === 'financeiro'} onClick={() => handleTabChange('financeiro')} expanded={sidebarExpanded} />
                 <SidebarItem icon={<Wrench size={18} />} text="Pós-Venda" active={activeTab === 'posvendas'} onClick={() => handleTabChange('posvendas')} expanded={sidebarExpanded} />
-                <SidebarItem icon={<Settings size={18} />} text="Configurações" active={activeTab === 'configuracoes'} onClick={() => handleTabChange('configuracoes')} expanded={sidebarExpanded} />
+                <SidebarItem icon={<LifeBuoy size={18} />} text="Suporte" active={activeTab === 'suporte'} onClick={() => handleTabChange('suporte')} expanded={sidebarExpanded} />
               </div>
             </div>
 
@@ -228,75 +228,44 @@ export function CrmMockup() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full"
+                  className="h-full flex flex-col"
                 >
-                  {/* Column 1 */}
-                  <div className="bg-white/5 rounded-xl p-4 border border-white/5 flex flex-col h-full">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-sm font-semibold text-zinc-300">Entrada Rápida</h3>
-                      <span className="bg-orange-500/20 text-orange-400 text-xs px-2 py-0.5 rounded-full">3</span>
-                    </div>
-                    <div className="space-y-3 flex-1 overflow-y-auto mockup-scrollbar pr-1">
-                      {[
-                        { car: "Porsche 911 Carrera", client: "João Silva", status: "Aguardando Vistoria" },
-                        { car: "BMW X6 M", client: "Roberto Costa", status: "Documentação" },
-                        { car: "Mercedes G63", client: "André T.", status: "Agendado" },
-                      ].map((item, i) => (
-                        <div key={i} className="bg-[#111] p-4 rounded-lg border border-white/5 hover:border-white/10 transition-colors cursor-pointer group">
-                          <h4 className="text-sm font-semibold text-white group-hover:text-orange-400 transition-colors">{item.car}</h4>
-                          <p className="text-xs text-zinc-500 mt-1">{item.client}</p>
-                          <div className="mt-3 flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-zinc-600"></span>
-                            <span className="text-xs text-zinc-400">{item.status}</span>
+                  <div className="flex gap-4 h-full overflow-x-auto pb-4 mockup-scrollbar pr-2 min-w-full">
+                    {[
+                      { title: "Inbound", count: 8, color: "bg-blue-500", items: [{ name: "João Silva", car: "Taycan S" }, { name: "Maria Oliveira", car: "G63 AMG" }] },
+                      { title: "Prospecção", count: 5, color: "bg-orange-500", items: [{ name: "Carlos Eduardo", car: "X5 M" }] },
+                      { title: "Orçado", count: 12, color: "bg-yellow-500", items: [{ name: "Roberto Costa", car: "Defender" }, { name: "Ana P.", car: "GLS 600" }] },
+                      { title: "Fechado", count: 4, color: "bg-green-500", items: [{ name: "Fabio M.", car: "Macan Turbo" }] },
+                      { title: "Perdido", count: 2, color: "bg-red-500", items: [{ name: "Marcos T.", car: "RS6 Avant" }] },
+                    ].map((col, i) => (
+                      <div key={i} className="min-w-[200px] flex-1 flex flex-col gap-4">
+                        <div className="flex items-center justify-between px-2">
+                          <div className="flex items-center gap-2">
+                            <div className={cn("w-2 h-2 rounded-full", col.color)}></div>
+                            <h3 className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{col.title}</h3>
                           </div>
+                          <span className="text-[10px] font-bold text-zinc-600">{col.count}</span>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Column 2 */}
-                  <div className="bg-white/5 rounded-xl p-4 border border-white/5 flex flex-col h-full">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-sm font-semibold text-zinc-300">Em Desmontagem</h3>
-                      <span className="bg-blue-500/20 text-blue-400 text-xs px-2 py-0.5 rounded-full">2</span>
-                    </div>
-                    <div className="space-y-3 flex-1 overflow-y-auto mockup-scrollbar pr-1">
-                      {[
-                        { car: "Audi RSQ8", client: "Marcelo T.", status: "Remoção de forros" },
-                      ].map((item, i) => (
-                        <div key={i} className="bg-[#111] p-4 rounded-lg border border-white/5 hover:border-white/10 transition-colors cursor-pointer group">
-                          <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{item.car}</h4>
-                          <p className="text-xs text-zinc-500 mt-1">{item.client}</p>
-                          <div className="mt-3 flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                            <span className="text-xs text-zinc-400">{item.status}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Column 3 */}
-                  <div className="bg-white/5 rounded-xl p-4 border border-white/5 flex flex-col h-full">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-sm font-semibold text-zinc-300">Aplicação de Manta</h3>
-                      <span className="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded-full">4</span>
-                    </div>
-                    <div className="space-y-3 flex-1 overflow-y-auto mockup-scrollbar pr-1">
-                      <div className="bg-[#111] p-4 rounded-lg border border-white/5 hover:border-white/10 transition-colors cursor-pointer group">
-                        <h4 className="text-sm font-semibold text-white group-hover:text-green-400 transition-colors">Range Rover Vogue</h4>
-                        <p className="text-xs text-zinc-500 mt-1">Construtora Apex</p>
-                        <div className="mt-3 flex flex-col gap-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-zinc-400">Progresso</span>
-                            <span className="text-xs font-medium text-white">65%</span>
-                          </div>
-                          <div className="w-full bg-white/10 rounded-full h-1.5">
-                            <div className="bg-green-500 h-1.5 rounded-full" style={{ width: '65%' }}></div>
-                          </div>
+                        
+                        <div className="flex-1 space-y-3">
+                          {col.items.map((item, idx) => (
+                            <div key={idx} className="bg-white/5 border border-white/5 p-4 rounded-xl hover:border-white/10 transition-all cursor-pointer group shadow-lg">
+                              <h4 className="text-sm font-bold text-white group-hover:text-orange-500 transition-colors">{item.name}</h4>
+                              <p className="text-[10px] text-zinc-500 mt-1 uppercase tracking-tight">{item.car}</p>
+                              <div className="mt-3 flex items-center justify-between">
+                                <div className="flex -space-x-1">
+                                  <div className="w-4 h-4 rounded-full bg-zinc-800 border border-white/10"></div>
+                                </div>
+                                <span className="text-[9px] text-zinc-600 font-bold tracking-tighter">HÁ 2H</span>
+                              </div>
+                            </div>
+                          ))}
+                          <button className="w-full py-2 border border-dashed border-white/5 rounded-xl text-[10px] font-bold text-zinc-600 hover:text-zinc-400 hover:border-white/10 transition-all">
+                            + NOVO LEAD
+                          </button>
                         </div>
                       </div>
-                    </div>
+                    ))}
                   </div>
                 </motion.div>
               )}
@@ -349,6 +318,71 @@ export function CrmMockup() {
                 </motion.div>
               )}
 
+              {activeTab === 'financeiro' && (
+                <motion.div 
+                  key="financeiro"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6 h-full flex flex-col"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                      { label: "Receita Total", val: "R$ 540k", sub: "+12% este mês", color: "text-green-400" },
+                      { label: "Despesas Totais", val: "R$ 310k", sub: "-5% vs último mês", color: "text-red-400" },
+                      { label: "Resultado Líquido", val: "R$ 230k", sub: "Margem de 42.5%", color: "text-orange-500" },
+                    ].map((stat, i) => (
+                      <div key={i} className="bg-white/5 border border-white/5 p-5 rounded-2xl">
+                        <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">{stat.label}</p>
+                        <h4 className={cn("text-2xl font-bold tracking-tight", stat.color)}>{stat.val}</h4>
+                        <p className="text-[10px] font-medium text-zinc-600 mt-1">{stat.sub}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex-1 bg-white/5 border border-white/5 rounded-2xl p-6 flex flex-col relative overflow-hidden">
+                    <div className="flex items-center justify-between mb-8">
+                      <h3 className="text-sm font-bold text-white uppercase tracking-wider">Fluxo de Caixa (Anual)</h3>
+                      <div className="flex gap-2">
+                        <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/10 rounded-md">
+                          <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                          <span className="text-[9px] font-bold text-green-500 uppercase">Receita</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 px-2 py-1 bg-red-500/10 rounded-md">
+                          <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                          <span className="text-[9px] font-bold text-red-500 uppercase">Despesas</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex-1 flex items-end justify-between gap-2 px-2">
+                      {[40, 65, 45, 90, 55, 70, 85, 60, 75, 50, 65, 80].map((h, i) => (
+                        <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                          <div className="w-full flex flex-col gap-0.5">
+                            <motion.div 
+                              initial={{ height: 0 }}
+                              animate={{ height: `${h}%` }}
+                              className="w-full bg-green-500/40 rounded-t-sm"
+                            />
+                            <motion.div 
+                              initial={{ height: 0 }}
+                              animate={{ height: `${h * 0.6}%` }}
+                              className="w-full bg-red-500/40 rounded-b-sm"
+                            />
+                          </div>
+                          <span className="text-[8px] font-bold text-zinc-600 uppercase tracking-tighter">
+                            {['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'][i]}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                  </div>
+                </motion.div>
+              )}
+
               {activeTab === 'estoque' && (
                 <motion.div 
                   key="estoque"
@@ -392,11 +426,73 @@ export function CrmMockup() {
                 </motion.div>
               )}
 
+              {activeTab === 'suporte' && (
+                <motion.div 
+                  key="suporte"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                      { icon: <LifeBuoy size={20} />, label: "WhatsApp Direto", desc: "Fale com nossa equipe técnica instantaneamente para suporte rápido.", action: "CHAMAR NO WHATSAPP", color: "text-green-500" },
+                      { icon: <LifeBuoy size={20} />, label: "Suporte por E-mail", desc: "Para questões menos urgentes ou envio de documentos e relatórios.", action: "ENVIAR E-MAIL", color: "text-blue-500" },
+                      { icon: <LifeBuoy size={20} />, label: "Acesso Remoto", desc: "Se solicitado por um técnico, baixe a ferramenta de acesso remoto.", action: "BAIXAR ANYDESK", color: "text-red-500" },
+                    ].map((card, i) => (
+                      <div key={i} className="bg-white/5 border border-white/5 p-6 rounded-2xl hover:border-white/10 transition-all flex flex-col h-full">
+                        <div className={cn("w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mb-4", card.color)}>
+                          {card.icon}
+                        </div>
+                        <h4 className="text-base font-bold text-white mb-2">{card.label}</h4>
+                        <p className="text-xs text-zinc-500 leading-relaxed mb-6 flex-1">{card.desc}</p>
+                        <button className={cn("text-[10px] font-bold uppercase tracking-widest text-left", card.color)}>
+                          {card.action} →
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-4">
+                    <div className="bg-white/5 border border-white/5 rounded-2xl p-6">
+                      <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-6">Recursos Rápidos</h3>
+                      <div className="grid grid-cols-2 gap-3">
+                        {["Manuais de Uso", "Dúvidas Frequentes", "Status do Sistema", "Segurança de Dados"].map((item, i) => (
+                          <div key={i} className="bg-[#111] border border-white/5 p-4 rounded-xl flex items-center justify-between hover:border-white/10 transition-all cursor-pointer group">
+                            <span className="text-xs text-zinc-400 font-medium group-hover:text-white transition-colors">{item}</span>
+                            <div className="w-1.5 h-1.5 rounded-full bg-zinc-800 group-hover:bg-orange-500 transition-colors" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-zinc-900 to-black border border-white/5 rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-base font-bold text-white mb-2">Atendimento Telefônico</h3>
+                        <p className="text-xs text-zinc-500 leading-relaxed">Precisa falar agora? Nossa central está pronta para atender sua ligação.</p>
+                      </div>
+                      
+                      <button className="bg-green-500 hover:bg-green-400 text-black font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)]">
+                        <span>(11) 99999-9999</span>
+                      </button>
+
+                      <div className="flex items-center gap-2 justify-center">
+                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-[9px] font-bold text-green-500 uppercase tracking-widest">SUPORTE ONLINE AGORA</span>
+                      </div>
+                      
+                      <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-green-500/10 blur-3xl" />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
               {activeTab === 'projetos' && (
                 <ProjectsTabContent />
               )}
 
-              {activeTab !== 'pipelines' && activeTab !== 'propostas' && activeTab !== 'estoque' && activeTab !== 'projetos' && (
+              {activeTab !== 'pipelines' && activeTab !== 'propostas' && activeTab !== 'estoque' && activeTab !== 'projetos' && activeTab !== 'financeiro' && activeTab !== 'suporte' && (
                 <motion.div 
                   key="other"
                   initial={{ opacity: 0, y: 10 }}
