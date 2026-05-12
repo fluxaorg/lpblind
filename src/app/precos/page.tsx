@@ -10,7 +10,7 @@ export default function PrecosPage() {
             kineticWord="Planos"
             description="Escolha a configuração ideal para o tamanho da sua operação. Sem taxas ocultas, apenas escala."
             primaryButtonText="Agendar uma reunião"
-            primaryButtonAction={() => window.location.href = '/contato'}
+            primaryButtonAction={() => window.location.href = '/login'}
         >
             <section className="py-24 bg-black">
                 <div className="max-w-4xl mx-auto px-6">

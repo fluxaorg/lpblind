@@ -74,16 +74,41 @@ export default function Home() {
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/login" className="text-sm font-medium text-zinc-300 hover:text-white transition-colors">Entrar</Link>
-            <button className="text-sm font-medium text-black bg-white hover:bg-zinc-200 px-5 py-2 rounded-full transition-all flex items-center gap-2">
+            <Link 
+              href="/login" 
+              className="text-sm font-medium text-black bg-white hover:bg-zinc-200 px-6 py-2.5 rounded-full transition-all flex items-center gap-2"
+            >
               Agendar uma reunião
-            </button>
+            </Link>
           </div>
 
           <button className="md:hidden text-zinc-400" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
+
+        {/* MOBILE MENU */}
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="md:hidden absolute top-full inset-x-0 bg-black/95 backdrop-blur-2xl border-b border-white/10 p-6 flex flex-col gap-6"
+          >
+            <nav className="flex flex-col gap-4">
+              <Link href="/como-funciona" className="text-lg font-medium text-zinc-400" onClick={() => setMobileMenuOpen(false)}>Como funciona</Link>
+              <Link href="#recursos" className="text-lg font-medium text-zinc-400" onClick={() => setMobileMenuOpen(false)}>Recursos</Link>
+              <Link href="#depoimentos" className="text-lg font-medium text-zinc-400" onClick={() => setMobileMenuOpen(false)}>Depoimentos</Link>
+              <Link href="/sobre" className="text-lg font-medium text-zinc-400" onClick={() => setMobileMenuOpen(false)}>Sobre Nós</Link>
+            </nav>
+            <Link 
+              href="/login" 
+              className="w-full text-center bg-white text-black py-4 rounded-full font-bold"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Agendar uma reunião
+            </Link>
+          </motion.div>
+        )}
       </header>
 
       <main className="relative z-10">
@@ -113,9 +138,9 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center gap-4">
-              <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-semibold text-base hover:scale-105 transition-transform flex items-center justify-center gap-2">
+              <Link href="/login" className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-semibold text-base hover:scale-105 transition-transform flex items-center justify-center gap-2">
                 Agendar uma reunião <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
               <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white font-medium text-base hover:bg-white/10 transition-colors flex items-center justify-center">
                 Falar com consultor
               </button>
@@ -395,9 +420,9 @@ export default function Home() {
               Junte-se às oficinas mais eficientes do país. Comece a gerenciar seu fluxo com tecnologia de ponta hoje mesmo.
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-semibold text-base hover:scale-105 transition-transform">
+              <Link href="/login" className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-semibold text-base hover:scale-105 transition-transform flex items-center justify-center">
                 Agendar uma reunião agora
-              </button>
+              </Link>
               <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-transparent border border-white/20 text-white font-medium text-base hover:bg-white/5 transition-colors flex items-center justify-center gap-2">
                 Tirar dúvidas no WhatsApp <ChevronRight className="w-4 h-4" />
               </button>

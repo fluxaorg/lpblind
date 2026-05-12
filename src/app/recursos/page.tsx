@@ -10,7 +10,7 @@ export default function RecursosPage() {
             kineticWord="Recursos"
             description="Uma suíte completa de ferramentas desenvolvidas especificamente para o fluxo de trabalho de blindagem automotiva."
             primaryButtonText="Agendar uma reunião"
-            primaryButtonAction={() => window.location.href = '/contato'}
+            primaryButtonAction={() => window.location.href = '/login'}
         >
             <section className="py-24 bg-black">
                 <div className="max-w-7xl mx-auto px-6">
