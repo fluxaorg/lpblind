@@ -14,6 +14,29 @@ export default function LeadCapturePage() {
     whatsapp: ""
   });
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // FORMATE SUA MENSAGEM AQUI
+    const message = `Olá! Gostaria de agendar uma reunião.%0A%0A` +
+      `*Dados do Lead:*%0A` +
+      `*Nome:* ${formData.nome}%0A` +
+      `*Blindadora:* ${formData.blindadora}%0A` +
+      `*Faturamento:* ${formData.faturamento}%0A` +
+      `*Cargo:* ${formData.cargo}%0A` +
+      `*WhatsApp:* ${formData.whatsapp}`;
+
+    // COLOQUE SEU NÚMERO AQUI (Apenas números, com DDD)
+    const SEU_NUMERO = "5547992793347"; 
+    
+    window.open(`https://wa.me/${SEU_NUMERO}?text=${message}`, "_blank");
+  };
+
   return (
     <div className="min-h-screen bg-black text-white flex flex-col md:flex-row font-sans selection:bg-red-500/30">
       
@@ -24,7 +47,7 @@ export default function LeadCapturePage() {
         
         <div className="relative z-10 space-y-8">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-red-500">Diagnóstico Gratuito</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-red-500">Agendar Reunião</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] text-white">
@@ -81,7 +104,7 @@ export default function LeadCapturePage() {
               <p className="text-zinc-500 text-sm md:text-base font-medium">Leva menos de 2 minutos.</p>
             </div>
 
-            <form className="space-y-6 relative z-10" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-6 relative z-10" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Nome */}
                 <div className="space-y-2">
@@ -90,6 +113,8 @@ export default function LeadCapturePage() {
                     id="nome"
                     type="text"
                     required
+                    value={formData.nome}
+                    onChange={handleChange}
                     className="block w-full px-5 py-4 border border-white/5 rounded-2xl bg-white/[0.03] text-white placeholder-zinc-700 focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-red-600/50 transition-all text-sm"
                     placeholder="Ex: João Silva"
                   />
@@ -102,6 +127,8 @@ export default function LeadCapturePage() {
                     id="blindadora"
                     type="text"
                     required
+                    value={formData.blindadora}
+                    onChange={handleChange}
                     className="block w-full px-5 py-4 border border-white/5 rounded-2xl bg-white/[0.03] text-white placeholder-zinc-700 focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-red-600/50 transition-all text-sm"
                     placeholder="Ex: Blindagem Master"
                   />
@@ -114,14 +141,16 @@ export default function LeadCapturePage() {
                     <select
                       id="faturamento"
                       required
+                      value={formData.faturamento}
+                      onChange={handleChange}
                       className="block w-full px-5 py-4 border border-white/5 rounded-2xl bg-white/[0.03] text-white focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-red-600/50 transition-all text-sm appearance-none"
                     >
-                      <option value="" disabled selected className="bg-black">Selecione</option>
-                      <option value="200k" className="bg-black">Até R$ 200.000</option>
-                      <option value="500k" className="bg-black">R$ 200.000 - R$ 500.000</option>
-                      <option value="1m" className="bg-black">R$ 500.000 - R$ 1.000.000</option>
-                      <option value="3m" className="bg-black">R$ 1.000.000 - R$ 3.000.000</option>
-                      <option value="plus" className="bg-black">Acima de R$ 3.000.000</option>
+                      <option value="" disabled className="bg-black">Selecione</option>
+                      <option value="Até R$ 200k" className="bg-black">Até R$ 200.000</option>
+                      <option value="R$ 200k - R$ 500k" className="bg-black">R$ 200.000 - R$ 500.000</option>
+                      <option value="R$ 500k - R$ 1M" className="bg-black">R$ 500.000 - R$ 1.000.000</option>
+                      <option value="R$ 1M - R$ 3M" className="bg-black">R$ 1.000.000 - R$ 3.000.000</option>
+                      <option value="Acima de R$ 3M" className="bg-black">Acima de R$ 3.000.000</option>
                     </select>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                       <ArrowRight className="w-4 h-4 text-zinc-600 rotate-90" />
@@ -136,13 +165,15 @@ export default function LeadCapturePage() {
                     <select
                       id="cargo"
                       required
+                      value={formData.cargo}
+                      onChange={handleChange}
                       className="block w-full px-5 py-4 border border-white/5 rounded-2xl bg-white/[0.03] text-white focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-red-600/50 transition-all text-sm appearance-none"
                     >
-                      <option value="" disabled selected className="bg-black">Selecione</option>
-                      <option value="dono" className="bg-black">Sou dono dessa bagaça</option>
-                      <option value="diretor" className="bg-black">Diretor</option>
-                      <option value="gerente" className="bg-black">Gerente</option>
-                      <option value="outro" className="bg-black">Outro</option>
+                      <option value="" disabled className="bg-black">Selecione</option>
+                      <option value="Donos" className="bg-black">Donos</option>
+                      <option value="Diretor" className="bg-black">Diretor</option>
+                      <option value="Gerente" className="bg-black">Gerente</option>
+                      <option value="Outro" className="bg-black">Outro</option>
                     </select>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                       <ArrowRight className="w-4 h-4 text-zinc-600 rotate-90" />
@@ -158,6 +189,8 @@ export default function LeadCapturePage() {
                   id="whatsapp"
                   type="tel"
                   required
+                  value={formData.whatsapp}
+                  onChange={handleChange}
                   className="block w-full px-5 py-4 border border-white/5 rounded-2xl bg-white/[0.03] text-white placeholder-zinc-700 focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-red-600/50 transition-all text-sm"
                   placeholder="(00) 0 0000-0000"
                 />
