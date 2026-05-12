@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Blindadora CRM | O Padrão Ouro em Gestão Automotiva",
   description: "A Blindagem do Futuro é Transparente. O primeiro CRM especializado que conecta sua oficina ao seu cliente.",
   icons: {
-    icon: "/favicon.png?v=2",
+    icon: "/favicon.png?v=3",
   },
 };
 
