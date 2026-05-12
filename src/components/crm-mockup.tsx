@@ -49,7 +49,7 @@ export function CrmMockup() {
         const nextIndex = (currentIndex + 1) % tabs.length;
         return tabs[nextIndex];
       });
-    }, 7000);
+    }, 10000);
   };
 
   const stopAutoSwitch = () => {
@@ -503,10 +503,11 @@ function ProjectsTabContent() {
 
   const projects = [
     { 
-      car: "Porsche 911", 
+      car: "Porsche Macan", 
       stage: "Manta Balística", 
       progress: 65, 
-      margin: "42%", 
+      margin: "42%",
+      profitVal: "R$ 58.800,00",
       materials: [
         { name: "Manta de Aramida (Camadas)", qty: "18m²" },
         { name: "Parafusos Inox 304", qty: "50 un" },
@@ -518,6 +519,7 @@ function ProjectsTabContent() {
       stage: "Instalação de Vidros", 
       progress: 85, 
       margin: "38%", 
+      profitVal: "R$ 45.600,00",
       materials: [
         { name: "Kit de Vidros AGP iB33", qty: "1 jogo" },
         { name: "Placas de Titânio (Portas)", qty: "2 un" },
@@ -529,6 +531,7 @@ function ProjectsTabContent() {
       stage: "Desmontagem", 
       progress: 20, 
       margin: "45%", 
+      profitVal: "R$ 72.000,00",
       materials: [
         { name: "Etiquetas de Rastreabilidade", qty: "12 un" },
         { name: "Protetores de Acabamento", qty: "1 kit" }
@@ -568,6 +571,7 @@ function ProjectsTabContent() {
                 <div className="text-right">
                   <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Margem de Lucro</p>
                   <p className="text-2xl font-bold text-green-400 tracking-tight">{proj.margin}</p>
+                  <p className="text-xs font-bold text-green-500/50 mt-0.5">{(proj as any).profitVal}</p>
                 </div>
               </div>
 
