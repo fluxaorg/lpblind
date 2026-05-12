@@ -11,7 +11,11 @@ import {
   Wrench, 
   Package,
   Bell,
-  LifeBuoy
+  LifeBuoy,
+  Users,
+  BarChart3,
+  TrendingUp,
+  PieChart
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SimpleTextReveal } from "@/components/ui/simple-text-reveal";
@@ -221,6 +225,144 @@ export function CrmMockup() {
           <main className="flex-1 overflow-auto mockup-scrollbar p-8 relative">
             
             <AnimatePresence mode="wait">
+              {activeTab === 'dashboard' && (
+                <motion.div 
+                  key="dashboard"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
+                  {/* Top Stats */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[
+                      { icon: <Users size={18} />, label: "Clientes", val: "9", sub: "0 novos esta semana", color: "bg-blue-500/10 text-blue-500" },
+                      { icon: <DollarSign size={18} />, label: "Faturamento", val: "R$ 50,0k", sub: "Esta semana", color: "bg-green-500/10 text-green-500" },
+                      { icon: <TrendingUp size={18} />, label: "Margem Bruta", val: "99%", sub: "Sobre contratos", color: "bg-purple-500/10 text-purple-500" },
+                      { icon: <BarChart3 size={18} />, label: "Despesas", val: "R$ 0,00", sub: "Esta semana", color: "bg-red-500/10 text-red-500" },
+                    ].map((stat, i) => (
+                      <div key={i} className="bg-white/5 border border-white/5 p-4 rounded-2xl flex items-center gap-4">
+                        <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center", stat.color)}>
+                          {stat.icon}
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{stat.label}</p>
+                          <h4 className="text-lg font-bold text-white tracking-tight">{stat.val}</h4>
+                          <p className="text-[10px] text-zinc-600 font-medium">{stat.sub}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Middle Section */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-white/5 border border-white/5 rounded-2xl p-6">
+                      <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-6">Pipeline de Vendas</h3>
+                      <div className="space-y-4">
+                        {[
+                          { label: "Novos", val: 0, color: "bg-zinc-800" },
+                          { label: "Em Contato", val: 0, color: "bg-zinc-800" },
+                          { label: "Proposta", val: 0, color: "bg-zinc-800" },
+                          { label: "Fechados", val: 100, color: "bg-green-500" },
+                        ].map((p, i) => (
+                          <div key={i} className="space-y-1.5">
+                            <div className="flex justify-between text-[10px] font-bold text-zinc-500 uppercase">
+                              <span>{p.label}</span>
+                              <span>{p.val === 100 ? "2" : "0"}</span>
+                            </div>
+                            <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+                              <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${p.val}%` }}
+                                className={cn("h-full rounded-full", p.color)}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="bg-white/5 border border-white/5 rounded-2xl p-6 flex flex-col">
+                      <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-6">Análise de Faturamento</h3>
+                      <div className="flex-1 flex items-end justify-between gap-1 pb-2">
+                        {[15, 20, 10, 80, 25, 30, 20, 25, 20, 22, 20, 25].map((h, i) => (
+                          <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                            <motion.div 
+                              initial={{ height: 0 }}
+                              animate={{ height: `${h}%` }}
+                              className="w-full bg-blue-500/20 rounded-t-sm border-t border-x border-blue-500/40 relative group"
+                            >
+                              {i === 3 && (
+                                <div className="absolute -top-1 -left-1 -right-1 h-2 bg-blue-500 blur-md opacity-50" />
+                              )}
+                            </motion.div>
+                            <span className="text-[7px] font-bold text-zinc-600 uppercase">
+                              {['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'][i]}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom Section */}
+                  <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6">
+                    <div className="bg-white/5 border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center relative overflow-hidden">
+                      <div className="relative w-32 h-32 flex items-center justify-center mb-4">
+                        <svg className="w-full h-full -rotate-90">
+                          <circle cx="64" cy="64" r="54" fill="transparent" stroke="currentColor" strokeWidth="12" className="text-white/5" />
+                          <circle cx="64" cy="64" r="54" fill="transparent" stroke="currentColor" strokeWidth="12" strokeDasharray="340" strokeDashoffset="85" className="text-orange-500" />
+                          <circle cx="64" cy="64" r="54" fill="transparent" stroke="currentColor" strokeWidth="12" strokeDasharray="340" strokeDashoffset="280" className="text-blue-500" />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                          <span className="text-2xl font-bold text-white">4</span>
+                          <span className="text-[8px] font-bold text-zinc-500 uppercase">Faturas</span>
+                        </div>
+                      </div>
+                      <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-1">Estatísticas</h3>
+                      <p className="text-[10px] text-zinc-500 font-medium">Distribuição por status</p>
+                    </div>
+
+                    <div className="bg-white/5 border border-white/5 rounded-2xl overflow-hidden">
+                      <div className="p-4 border-b border-white/5 flex justify-between items-center bg-[#111]">
+                        <h3 className="text-xs font-bold text-white uppercase tracking-widest">Faturas Recentes</h3>
+                        <button className="text-[10px] font-bold text-zinc-500 hover:text-white transition-colors">FILTRAR</button>
+                      </div>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-[10px] text-left">
+                          <thead className="text-zinc-500 bg-transparent border-b border-white/5">
+                            <tr>
+                              <th className="px-6 py-3 font-bold uppercase tracking-wider">NO</th>
+                              <th className="px-6 py-3 font-bold uppercase tracking-wider">Descrição</th>
+                              <th className="px-6 py-3 font-bold uppercase tracking-wider text-center">Status</th>
+                              <th className="px-6 py-3 font-bold uppercase tracking-wider text-right">Valor</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { id: "#1", desc: "Fatura Geral", status: "PENDENTE", color: "text-red-400 bg-red-400/10", val: "R$ 9.999,00" },
+                              { id: "#2", desc: "Fatura Sistema", status: "PAGO", color: "text-green-400 bg-green-400/10", val: "R$ 4.000,00" },
+                            ].map((row, idx) => (
+                              <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                <td className="px-6 py-4 text-zinc-500 font-bold">{row.id}</td>
+                                <td className="px-6 py-4 font-bold text-white uppercase tracking-tight">{row.desc}</td>
+                                <td className="px-6 py-4 text-center">
+                                  <span className={cn("px-2 py-0.5 rounded-full text-[8px] font-bold border border-current opacity-80", row.color)}>
+                                    {row.status}
+                                  </span>
+                                </td>
+                                <td className="px-6 py-4 text-right text-zinc-300 font-bold">{row.val}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
               {activeTab === 'pipelines' && (
                 <motion.div 
                   key="pipelines"
