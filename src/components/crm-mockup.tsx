@@ -91,8 +91,8 @@ export function CrmMockup() {
       case 'projetos':
         return {
           title: "Projetos de Blindagem",
-          subtitle: "O cronograma completo do carro sob controle",
-          description: "Administre prazos, equipes responsáveis e o progresso da blindagem (desmontagem, manta, vidros, remontagem) para garantir a entrega no dia certo."
+          subtitle: "Status de produção e controle de margem",
+          description: "Acompanhe o status real de cada veículo e a rentabilidade de cada serviço. Saiba exatamente qual sua margem de lucro em tempo real enquanto o carro avança na linha de produção."
         };
       case 'estoque':
         return {
@@ -392,7 +392,70 @@ export function CrmMockup() {
                 </motion.div>
               )}
 
-              {activeTab !== 'pipelines' && activeTab !== 'propostas' && activeTab !== 'estoque' && (
+              {activeTab === 'projetos' && (
+                <motion.div 
+                  key="projetos"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-4"
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-lg font-medium text-zinc-100">Projetos em Andamento</h3>
+                    <div className="flex gap-2">
+                      <div className="flex items-center gap-1.5 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-[10px] font-bold text-green-500 uppercase tracking-wider">Rentabilidade Alta</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-4">
+                    {[
+                      { car: "Porsche 911 Carrera", stage: "Manta Balística", progress: 65, margin: "42%", trend: "up" },
+                      { car: "BMW X6 M Edition", stage: "Instalação de Vidros", progress: 85, margin: "38%", trend: "stable" },
+                      { car: "Mercedes G63 AMG", stage: "Desmontagem", progress: 20, margin: "45%", trend: "up" },
+                    ].map((proj, i) => (
+                      <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-all group relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4">
+                          <div className="text-right">
+                            <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Margem de Lucro</p>
+                            <p className="text-2xl font-bold text-green-400 tracking-tight">{proj.margin}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col gap-4">
+                          <div>
+                            <h4 className="text-base font-bold text-zinc-100 group-hover:text-orange-500 transition-colors">{proj.car}</h4>
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="text-xs text-zinc-400 font-medium">{proj.stage}</span>
+                              <span className="text-zinc-800">•</span>
+                              <span className="text-xs text-zinc-500">{proj.progress}% concluído</span>
+                            </div>
+                          </div>
+
+                          <div className="w-full max-w-md">
+                            <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+                              <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${proj.progress}%` }}
+                                transition={{ duration: 1, delay: 0.5 }}
+                                className="bg-gradient-to-r from-orange-600 to-orange-400 h-full rounded-full"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Subtle background glow for margin */}
+                        <div className="absolute -right-10 -top-10 w-32 h-32 bg-green-500/5 blur-3xl pointer-events-none" />
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab !== 'pipelines' && activeTab !== 'propostas' && activeTab !== 'estoque' && activeTab !== 'projetos' && (
                 <motion.div 
                   key="other"
                   initial={{ opacity: 0, y: 10 }}
