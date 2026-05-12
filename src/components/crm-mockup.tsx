@@ -393,66 +393,7 @@ export function CrmMockup() {
               )}
 
               {activeTab === 'projetos' && (
-                <motion.div 
-                  key="projetos"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="space-y-4"
-                >
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-medium text-zinc-100">Projetos em Andamento</h3>
-                    <div className="flex gap-2">
-                      <div className="flex items-center gap-1.5 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                        <span className="text-[10px] font-bold text-green-500 uppercase tracking-wider">Rentabilidade Alta</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-4">
-                    {[
-                      { car: "Porsche 911 Carrera", stage: "Manta Balística", progress: 65, margin: "42%", trend: "up" },
-                      { car: "BMW X6 M Edition", stage: "Instalação de Vidros", progress: 85, margin: "38%", trend: "stable" },
-                      { car: "Mercedes G63 AMG", stage: "Desmontagem", progress: 20, margin: "45%", trend: "up" },
-                    ].map((proj, i) => (
-                      <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-all group relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-4">
-                          <div className="text-right">
-                            <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Margem de Lucro</p>
-                            <p className="text-2xl font-bold text-green-400 tracking-tight">{proj.margin}</p>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-col gap-4">
-                          <div>
-                            <h4 className="text-base font-bold text-zinc-100 group-hover:text-orange-500 transition-colors">{proj.car}</h4>
-                            <div className="flex items-center gap-2 mt-1">
-                              <span className="text-xs text-zinc-400 font-medium">{proj.stage}</span>
-                              <span className="text-zinc-800">•</span>
-                              <span className="text-xs text-zinc-500">{proj.progress}% concluído</span>
-                            </div>
-                          </div>
-
-                          <div className="w-full max-w-md">
-                            <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-                              <motion.div 
-                                initial={{ width: 0 }}
-                                animate={{ width: `${proj.progress}%` }}
-                                transition={{ duration: 1, delay: 0.5 }}
-                                className="bg-gradient-to-r from-orange-600 to-orange-400 h-full rounded-full"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Subtle background glow for margin */}
-                        <div className="absolute -right-10 -top-10 w-32 h-32 bg-green-500/5 blur-3xl pointer-events-none" />
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
+                <ProjectsTabContent />
               )}
 
               {activeTab !== 'pipelines' && activeTab !== 'propostas' && activeTab !== 'estoque' && activeTab !== 'projetos' && (
@@ -554,5 +495,137 @@ function SidebarItem({ icon, text, active, expanded, onClick }: { icon: React.Re
         )}
       </AnimatePresence>
     </button>
+  );
+}
+
+function ProjectsTabContent() {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  const projects = [
+    { 
+      car: "Porsche 911", 
+      stage: "Manta Balística", 
+      progress: 65, 
+      margin: "42%", 
+      materials: [
+        { name: "Manta de Aramida (Camadas)", qty: "18m²" },
+        { name: "Parafusos Inox 304", qty: "50 un" },
+        { name: "Resina Especial de Cura", qty: "2.5L" }
+      ]
+    },
+    { 
+      car: "BMW X6 M", 
+      stage: "Instalação de Vidros", 
+      progress: 85, 
+      margin: "38%", 
+      materials: [
+        { name: "Kit de Vidros AGP iB33", qty: "1 jogo" },
+        { name: "Placas de Titânio (Portas)", qty: "2 un" },
+        { name: "Silicone Estrutural", qty: "4 tubos" }
+      ]
+    },
+    { 
+      car: "Mercedes G63 AMG", 
+      stage: "Desmontagem", 
+      progress: 20, 
+      margin: "45%", 
+      materials: [
+        { name: "Etiquetas de Rastreabilidade", qty: "12 un" },
+        { name: "Protetores de Acabamento", qty: "1 kit" }
+      ]
+    },
+  ];
+
+  return (
+    <motion.div 
+      key="projetos"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.3 }}
+      className="space-y-4"
+    >
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-medium text-zinc-100">Projetos em Andamento</h3>
+        <div className="flex items-center gap-1.5 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-[10px] font-bold text-green-500 uppercase tracking-wider">Rentabilidade Alta</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4">
+        {projects.map((proj, i) => (
+          <div 
+            key={i} 
+            className={cn(
+              "bg-white/5 border border-white/5 rounded-2xl transition-all group relative overflow-hidden cursor-pointer",
+              expandedIndex === i ? "border-white/20 bg-white/[0.07]" : "hover:border-white/10"
+            )}
+            onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
+          >
+            <div className="p-5 flex flex-col gap-4">
+              <div className="absolute top-0 right-0 p-4">
+                <div className="text-right">
+                  <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Margem de Lucro</p>
+                  <p className="text-2xl font-bold text-green-400 tracking-tight">{proj.margin}</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div>
+                  <h4 className="text-base font-bold text-zinc-100 group-hover:text-orange-500 transition-colors">{proj.car}</h4>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-xs text-zinc-400 font-medium">{proj.stage}</span>
+                    <span className="text-zinc-800">•</span>
+                    <span className="text-xs text-zinc-500">{proj.progress}% concluído</span>
+                  </div>
+                </div>
+
+                <div className="w-full max-w-md">
+                  <div className="w-full bg-white/5 rounded-full h-1.2 overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${proj.progress}%` }}
+                      transition={{ duration: 1, delay: 0.2 }}
+                      className="bg-gradient-to-r from-orange-600 to-orange-400 h-full rounded-full"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <AnimatePresence>
+              {expandedIndex === i && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="border-t border-white/5 bg-black/20"
+                >
+                  <div className="p-5 pt-4 space-y-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Package size={14} className="text-zinc-500" />
+                      <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Materiais em Uso (Estoque)</span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {proj.materials.map((mat, idx) => (
+                        <div key={idx} className="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-xl">
+                          <span className="text-xs text-zinc-300 font-medium">{mat.name}</span>
+                          <span className="text-xs text-orange-500 font-bold">{mat.qty}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            
+            {/* Subtle background glow for margin */}
+            <div className="absolute -right-10 -top-10 w-32 h-32 bg-green-500/5 blur-3xl pointer-events-none" />
+          </div>
+        ))}
+      </div>
+    </motion.div>
   );
 }
