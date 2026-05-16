@@ -1,16 +1,19 @@
 "use client";
-// Triggering fresh deploy to confirm revert
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, LayoutDashboard, FileText, Package, Activity, Target, Shield, CheckCircle2, ChevronRight, Menu, X } from "lucide-react";
+import { ArrowRight, LayoutDashboard, FileText, Package, Activity, Target, Shield, CheckCircle2, ChevronRight, Menu, X, TrendingUp, Sparkles, Bot, Send } from "lucide-react";
 import { FAQ } from "@/components/faq";
 import { FlipWords } from "@/components/ui/flip-words";
 import { TestimonialsColumns } from "@/components/testimonials-columns-1";
 import { IntegrationsSection } from "@/components/stack-feature-section";
 import { KineticText } from "@/components/ui/kinetic-text";
 import { BentoFeaturesSection } from "@/components/bento-features";
+import { ProblemStatement } from "@/components/problem-statement";
+import { FeatureModules } from "@/components/feature-modules";
+import { ROICalculator } from "@/components/roi-calculator";
+import { HowItWorks } from "@/components/how-it-works";
 
 // --- ANIMATION VARIANTS ---
 const fadeUp: any = {
@@ -27,7 +30,7 @@ const staggerContainer: any = {
 };
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<"pipeline" | "propostas" | "estoque">("pipeline");
+  const [activeTab, setActiveTab] = useState<"pipeline" | "propostas" | "estoque" | "financeiro" | "ia">("pipeline");
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
@@ -166,27 +169,41 @@ export default function Home() {
                 <div className="w-3 h-3 rounded-full bg-[#61C554]"></div>
               </div>
               
-              <div className="flex bg-white/5 rounded-lg p-1 border border-white/5 backdrop-blur-md">
+              <div className="flex flex-wrap bg-white/5 rounded-lg p-1 border border-white/5 backdrop-blur-md gap-0.5">
                 <button 
                   onClick={() => setActiveTab("pipeline")}
-                  className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-2 ${activeTab === 'pipeline' ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${activeTab === 'pipeline' ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
                 >
-                  <LayoutDashboard className="w-4 h-4" />
-                  Pipeline Visual
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  Pipeline
                 </button>
                 <button 
                   onClick={() => setActiveTab("propostas")}
-                  className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-2 ${activeTab === 'propostas' ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${activeTab === 'propostas' ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
                 >
-                  <FileText className="w-4 h-4" />
+                  <FileText className="w-3.5 h-3.5" />
                   Propostas
                 </button>
                 <button 
                   onClick={() => setActiveTab("estoque")}
-                  className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-2 ${activeTab === 'estoque' ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${activeTab === 'estoque' ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
                 >
-                  <Package className="w-4 h-4" />
+                  <Package className="w-3.5 h-3.5" />
                   Estoque
+                </button>
+                <button 
+                  onClick={() => setActiveTab("financeiro")}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${activeTab === 'financeiro' ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
+                >
+                  <TrendingUp className="w-3.5 h-3.5" />
+                  Financeiro
+                </button>
+                <button 
+                  onClick={() => setActiveTab("ia")}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${activeTab === 'ia' ? 'bg-orange-500/20 text-orange-400 shadow-sm' : 'text-zinc-400 hover:text-zinc-200'}`}
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  IA
                 </button>
               </div>
               <div className="w-16"></div>
@@ -333,9 +350,106 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* FINANCEIRO TAB */}
+              <div className={`absolute inset-0 transition-all duration-500 ${activeTab === 'financeiro' ? 'opacity-100 translate-y-0 relative z-10' : 'opacity-0 translate-y-4 absolute -z-10'}`}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="md:col-span-2 bg-white/5 rounded-xl border border-white/5 p-5">
+                    <div className="flex items-center justify-between mb-5">
+                      <h3 className="text-sm font-semibold text-zinc-300">Resultado do Mês — Maio 2026</h3>
+                      <span className="text-xs text-green-400 bg-green-400/10 px-2 py-1 rounded-full font-medium">↑ +23% vs abril</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                      {[
+                        { label: "Receita Bruta", value: "R$ 487k", color: "text-white" },
+                        { label: "Custo de Materiais", value: "R$ 198k", color: "text-zinc-400" },
+                        { label: "Lucro Líquido", value: "R$ 289k", color: "text-green-400" },
+                      ].map((item, i) => (
+                        <div key={i} className="bg-[#111] rounded-lg p-4 border border-white/5">
+                          <p className="text-xs text-zinc-500 mb-2">{item.label}</p>
+                          <p className={`text-xl font-bold font-mono ${item.color}`}>{item.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-5">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-zinc-500">Margem de lucro</span>
+                        <span className="text-xs font-bold text-green-400">59.3%</span>
+                      </div>
+                      <div className="w-full bg-white/10 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full" style={{ width: '59.3%' }} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      { label: "Veículos entregues", value: "12", sub: "esse mês" },
+                      { label: "Ticket médio", value: "R$ 40.6k", sub: "por veículo" },
+                      { label: "A receber", value: "R$ 134k", sub: "próx. 30 dias" },
+                    ].map((item, i) => (
+                      <div key={i} className="bg-white/5 rounded-xl border border-white/5 p-4">
+                        <p className="text-xs text-zinc-500 mb-1">{item.label}</p>
+                        <p className="text-xl font-bold text-white font-mono">{item.value}</p>
+                        <p className="text-xs text-zinc-600">{item.sub}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* IA TAB */}
+              <div className={`absolute inset-0 transition-all duration-500 ${activeTab === 'ia' ? 'opacity-100 translate-y-0 relative z-10' : 'opacity-0 translate-y-4 absolute -z-10'}`}>
+                <div className="bg-[#080808] rounded-xl border border-orange-500/15 overflow-hidden h-full flex flex-col">
+                  <div className="p-4 border-b border-white/5 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-orange-500/15 flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-orange-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-white">IA do BlindMaster</p>
+                      <p className="text-xs text-zinc-500">Analisa seus dados em tempo real</p>
+                    </div>
+                    <div className="ml-auto flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                      <span className="text-xs text-green-400">Online</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 p-4 space-y-4 overflow-auto">
+                    <div className="flex gap-3">
+                      <div className="w-7 h-7 rounded-full bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                        <Bot className="w-3.5 h-3.5 text-orange-400" />
+                      </div>
+                      <div className="bg-[#111] border border-white/5 rounded-xl rounded-tl-none px-4 py-3 max-w-xs">
+                        <p className="text-sm text-zinc-300">Olá! Analisei sua operação hoje. Você tem <span className="text-orange-400 font-medium">3 veículos</span> com prazo vencendo essa semana. Quer que eu gere os alertas para a equipe?</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 justify-end">
+                      <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl rounded-tr-none px-4 py-3 max-w-xs">
+                        <p className="text-sm text-zinc-300">Qual foi meu custo médio por veículo esse mês?</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="w-7 h-7 rounded-full bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                        <Bot className="w-3.5 h-3.5 text-orange-400" />
+                      </div>
+                      <div className="bg-[#111] border border-white/5 rounded-xl rounded-tl-none px-4 py-3 max-w-xs">
+                        <p className="text-sm text-zinc-300">Seu custo médio por veículo em maio foi de <span className="text-white font-bold">R$ 16.500</span> — <span className="text-green-400">↓ 8% vs abril</span>. O maior custo foi manta aramida (R$ 9.200). Quer sugestões para otimizar?</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 border-t border-white/5">
+                    <div className="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3 border border-white/5">
+                      <input type="text" placeholder="Pergunte qualquer coisa sobre sua operação..." className="flex-1 bg-transparent text-sm text-zinc-300 placeholder:text-zinc-600 outline-none" readOnly />
+                      <Send className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </motion.div>
         </section>
+
+        {/* PROBLEM STATEMENT */}
+        <ProblemStatement />
 
         {/* FLIP WORDS SECTION */}
         <section className="py-24 px-6 bg-black border-t border-white/5">
@@ -394,6 +508,15 @@ export default function Home() {
             <BentoFeaturesSection />
           </div>
         </section>
+
+        {/* FEATURE MODULES — 6 módulos em detalhe */}
+        <FeatureModules />
+
+        {/* ROI CALCULATOR */}
+        <ROICalculator />
+
+        {/* HOW IT WORKS */}
+        <HowItWorks />
 
         {/* TESTIMONIALS */}
         <div id="depoimentos">
